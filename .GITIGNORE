@@ -1,0 +1,5 @@
+# Environment file
+env/
+
+# Private config (Has your key in it)
+keys.py
