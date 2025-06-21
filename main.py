@@ -29,13 +29,13 @@ async def on_ready():
     await bot.tree.sync()
 
 
-@bot.command(name='roll', description='Rolls a dice')
+@bot.tree.command(name='roll', description='Rolls a dice')
 async def roll(ctx, n: int):
     if n <= 0:
-        await ctx.respond('You must roll at least one die.')
+        await ctx.response.send_message('You must roll at least one die.')
         return
     results = roll_dice(n)
     fives_and_sixes = [roll for roll in results if roll >= 5]
-    await ctx.respond(f'You rolled: {results}\nSuccesses: {sum(fives_and_sixes)}')
+    await ctx.response.send_message(f'You rolled: {results}\nSuccesses: {sum(fives_and_sixes)}')
 
 bot.run(TOKEN)
