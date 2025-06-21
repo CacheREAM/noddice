@@ -1,13 +1,17 @@
 import discord
 from discord.ext import commands
+from discord import app_commands
 import random
 from keys import TOKEN
 
 intents = discord.Intents.default()
 intents.typing = False
 intents.presences = False
+intents.message_content = True
 
 bot = commands.Bot(command_prefix=None, intents=intents)
+client = discord.Client(intents=intents)
+tree = app_commands.CommandTree(client)
 
 
 def roll_dice(n):
@@ -29,13 +33,16 @@ async def on_ready():
     await bot.tree.sync()
 
 
-@bot.tree.command(name='roll', description='Rolls a dice')
-async def roll(ctx, n: int):
+@app_commands.command(name='roll', description='Rolls a dice')
+async def roll(interaction: discord.Interaction, n: int):
     if n <= 0:
-        await ctx.response.send_message('You must roll at least one die.')
+        await interaction.response.send_message('You must roll at least one die.', ephemeral=True)
         return
     results = roll_dice(n)
     fives_and_sixes = [roll for roll in results if roll >= 5]
-    await ctx.response.send_message(f'You rolled: {results}\nSuccesses: {sum(fives_and_sixes)}')
+    await interaction.response.send_message(f'You rolled: {results}\nSuccesses: {sum(fives_and_sixes)}', ephemeral=True)
+
+
+tree.add_command(roll)
 
 bot.run(TOKEN)
