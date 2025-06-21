@@ -29,7 +29,7 @@ async def on_ready():
     await bot.tree.sync()
 
 
-@bot.slash_command(name='roll', description='Rolls a dice')
+@bot.add_command(name='roll', description='Rolls a dice')
 async def roll(ctx, n: int):
     if n <= 0:
         await ctx.respond('You must roll at least one die.')
