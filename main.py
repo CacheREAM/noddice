@@ -9,7 +9,7 @@ intents.typing = False
 intents.presences = False
 intents.message_content = True
 
-bot = commands.Bot(command_prefix=None, intents=intents)
+bot = commands.Bot(intents=intents)
 client = discord.Client(intents=intents)
 tree = app_commands.CommandTree(client)
 
@@ -24,7 +24,7 @@ def roll_dice(n):
             if roll == 6:
                 recursive_roll(1)
     recursive_roll(n)
-    return sorted(results)
+    return results
 
 
 @bot.event
@@ -40,7 +40,7 @@ async def roll(interaction: discord.Interaction, num_dice: int):
         await interaction.response.send_message('You must roll at least one die.')
         return
     results = roll_dice(num_dice)
-    fives_and_sixes = [roll for roll in results if roll >= 5]
-    await interaction.response.send_message(f'You rolled: {results}\nSuccesses: {sum(fives_and_sixes)}')
+    successes = len([roll for roll in results if roll >= 5])
+    await interaction.response.send_message(f'You rolled: {results}\nSuccesses: {successes}')
 
 bot.run(TOKEN)
