@@ -1,5 +1,8 @@
 # Environment file
-env/
+env/*
+
+# Pycache
+__pycache__/*
 
 # Private config (Has your key in it)
 keys.py
