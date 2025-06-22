@@ -33,16 +33,14 @@ async def on_ready():
     await bot.tree.sync()
 
 
-@app_commands.command(name='roll', description='Rolls a dice')
-async def roll(interaction: discord.Interaction, n: int):
-    if n <= 0:
-        await interaction.response.send_message('You must roll at least one die.', ephemeral=True)
+@bot.tree.command(name='roll', description='Rolls a dice')
+@app_commands.nodroll(num_dice="How many dice?")
+async def roll(interaction: discord.Interaction, num_dice: int):
+    if num_dice <= 0:
+        await interaction.response.send_message('You must roll at least one die.')
         return
-    results = roll_dice(n)
+    results = roll_dice(num_dice)
     fives_and_sixes = [roll for roll in results if roll >= 5]
-    await interaction.response.send_message(f'You rolled: {results}\nSuccesses: {sum(fives_and_sixes)}', ephemeral=True)
-
-
-tree.add_command(roll)
+    await interaction.response.send_message(f'You rolled: {results}\nSuccesses: {sum(fives_and_sixes)}')
 
 bot.run(TOKEN)
