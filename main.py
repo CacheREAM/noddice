@@ -34,7 +34,7 @@ async def on_ready():
 
 
 @bot.tree.command(name='roll', description='Rolls a dice')
-@app_commands.nodroll(num_dice="How many dice?")
+@app_commands.describe(num_dice="How many dice?")
 async def roll(interaction: discord.Interaction, num_dice: int):
     if num_dice <= 0:
         await interaction.response.send_message('You must roll at least one die.')
