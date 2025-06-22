@@ -20,9 +20,11 @@ def roll_dice(n):
     def recursive_roll(n):
         rolls = [random.randint(1, 6) for _ in range(n)]
         results.extend(rolls)
+        print(f'{rolls}')
         for i, roll in enumerate(rolls):
             if roll == 6:
                 recursive_roll(1)
+                print(f'{rolls}')
     recursive_roll(n)
     return results
 
