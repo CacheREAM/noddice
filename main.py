@@ -9,7 +9,7 @@ intents.typing = False
 intents.presences = False
 intents.message_content = True
 
-bot = commands.Bot(intents=intents)
+bot = commands.Bot(command_prefix='dice', intents=intents)
 client = discord.Client(intents=intents)
 tree = app_commands.CommandTree(client)
 
